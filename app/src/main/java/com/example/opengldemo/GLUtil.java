@@ -16,6 +16,27 @@ import java.io.InputStreamReader;
 public class GLUtil {
     private final static String TAG = "GLUtil";
 
+    public static int createProgram(int... shaders){
+        int program = GLES20.glCreateProgram();
+        if(program == 0) {
+            Log.e(TAG, "create program fail");
+            return program;
+        }
+        for(int shader : shaders) {
+            GLES20.glAttachShader(program, shader);
+        }
+        GLES20.glLinkProgram(program);
+        int[] linkStatus = new int[1];
+        GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
+        if (linkStatus[0] != GLES20.GL_TRUE) {
+            Log.e(TAG, "Could not link program");
+            Log.e(TAG, GLES20.glGetProgramInfoLog(program));
+            GLES20.glDeleteProgram(program);
+            program = 0;
+        }
+        return program;
+    }
+
     public static int loadShader(int shaderType, String source) {
         int shader = GLES20.glCreateShader(shaderType);
         if(shader == 0) {

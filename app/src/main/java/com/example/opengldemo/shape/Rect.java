@@ -36,12 +36,6 @@ public class Rect {
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
 
-    private final String vertexShaderCode =
-        "attribute vec4 vPosition;" +
-        "void main() {" +
-        "  gl_Position = vPosition;" +
-        "}";
-
     private final String fragmentShaderCode =
         "precision mediump float;" +
         "uniform vec4 vColor;" +
@@ -65,21 +59,11 @@ public class Rect {
         vertexBuffer.position(0);
         
         int vertexShader = GLUtil.loadShader(GLES20.GL_VERTEX_SHADER,
-		                GLUtil.readRawFile(res, R.raw.vertexshader));
-		int fragmentShader = GLUtil.loadShader(GLES20.GL_FRAGMENT_SHADER,
-		                fragmentShaderCode);
-		
-		// create empty OpenGL ES Program
-		mProgram = GLES20.glCreateProgram();
-		
-		// add the vertex shader to program
-		GLES20.glAttachShader(mProgram, vertexShader);
-		
-		// add the fragment shader to program
-		GLES20.glAttachShader(mProgram, fragmentShader);
-		
-		// creates OpenGL ES program executables
-		GLES20.glLinkProgram(mProgram);
+                        GLUtil.readRawFile(res, R.raw.vertexshader));
+        int fragmentShader = GLUtil.loadShader(GLES20.GL_FRAGMENT_SHADER,
+                        fragmentShaderCode);
+        mProgram = GLUtil.createProgram(vertexShader, fragmentShader);
+
     }
     
 
