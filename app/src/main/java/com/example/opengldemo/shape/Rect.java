@@ -44,7 +44,7 @@ public class Rect {
         "}";
 
     public Rect(Resources res) {
-        // initialize vertex byte buffer for shape coordinates
+/*        // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
                 rectCoords.length * 4);
@@ -56,10 +56,12 @@ public class Rect {
         // add the coordinates to the FloatBuffer
         vertexBuffer.put(rectCoords);
         // set the buffer to read the first coordinate
-        vertexBuffer.position(0);
+        vertexBuffer.position(0);*/
+
+        vertexBuffer = GLUtil.arrayToBuffer(rectCoords);
         
         int vertexShader = GLUtil.loadShader(GLES20.GL_VERTEX_SHADER,
-                        GLUtil.readRawFile(res, R.raw.vertexshader));
+                        GLUtil.readRawFile(res, R.raw.vertex_shader));
         int fragmentShader = GLUtil.loadShader(GLES20.GL_FRAGMENT_SHADER,
                         fragmentShaderCode);
         mProgram = GLUtil.createProgram(vertexShader, fragmentShader);
