@@ -1,12 +1,11 @@
 package com.example.opengldemo;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
+import android.opengl.GLES31;
 import android.opengl.GLUtils;
-import android.os.Debug;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -128,6 +127,20 @@ public class GLUtil {
         }
 
         return textureHandle[0];
+    }
+
+    public static int createComputeShaderTexture(int format, int width, int height) {
+        int[] textureID = new int[1];
+        GLES31.glGenTextures(1, textureID, 0);
+
+        GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, textureID[0]);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MAG_FILTER, GLES31.GL_NEAREST);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_NEAREST);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
+        GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
+        //第二个参数 1 表示不使用mipmap
+        GLES31.glTexStorage2D(GLES31.GL_TEXTURE_2D, 1, format, width, height);
+        return textureID[0];
     }
 
 }

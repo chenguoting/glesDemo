@@ -3,6 +3,7 @@ package com.example.opengldemo;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import com.example.opengldemo.shape.BlackAndWhitePicture;
 import com.example.opengldemo.shape.Rect;
 import com.example.opengldemo.shape.Square;
 import com.example.opengldemo.shape.Triangle;
@@ -17,6 +18,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Square   mSquare;
     private Rect mRect;
     private Picture mPicture;
+    private BlackAndWhitePicture mBlackAndWhitePicture;
     private Context mContext;
 
     public MyGLRenderer(Context c) {
@@ -36,6 +38,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mRect = new Rect(mContext.getResources());
 
         mPicture = new Picture(mContext.getResources());
+        mBlackAndWhitePicture = new BlackAndWhitePicture(mContext.getResources());
     }
 
     @Override
@@ -43,7 +46,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         //mRect.draw();
-        mPicture.draw();
+        //mPicture.draw();
+        mBlackAndWhitePicture.draw();
     }
 
     @Override
