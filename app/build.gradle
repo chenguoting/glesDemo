@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.opengldemo"
-        minSdkVersion 14
-        targetSdkVersion 17
+        minSdkVersion 21
+        targetSdkVersion 21
     }
 
     buildTypes {
