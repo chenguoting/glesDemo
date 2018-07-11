@@ -5,7 +5,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.example.opengldemo.shape.BlackAndWhitePicture;
 import com.example.opengldemo.shape.Rect;
-import com.example.opengldemo.shape.Square;
 import com.example.opengldemo.shape.Triangle;
 import com.example.opengldemo.shape.Picture;
 
@@ -15,7 +14,6 @@ import android.opengl.GLSurfaceView;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Triangle mTriangle;
-    private Square   mSquare;
     private Rect mRect;
     private Picture mPicture;
     private BlackAndWhitePicture mBlackAndWhitePicture;
@@ -32,8 +30,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         
         // initialize a triangle
         mTriangle = new Triangle();
-        // initialize a square
-        mSquare = new Square();
         // initialize a rect
         mRect = new Rect(mContext.getResources());
 

@@ -6,8 +6,6 @@ import android.opengl.GLES20;
 import com.example.opengldemo.GLUtil;
 import com.example.opengldemo.R;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 public class Rect {
@@ -21,11 +19,7 @@ public class Rect {
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
-/*    static float triangleCoords[] = {   // in counterclockwise order:
-             0.0f,  0.622008459f, 0.0f, // top
-            -0.5f, -0.311004243f, 0.0f, // bottom left
-             0.5f, -0.311004243f, 0.0f  // bottom right
-    };*/
+
     static final float rectCoords[] = {   // in counterclockwise order:
             -1, 1, 0,
             1, 1, 0,
