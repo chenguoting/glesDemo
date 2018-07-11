@@ -138,9 +138,36 @@ public class GLUtil {
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_MIN_FILTER, GLES31.GL_NEAREST);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
-        //第二个参数 1 表示不使用mipmap
+        //第二个参数要是1，只知道和mipmap有关，具体原因不知道
         GLES31.glTexStorage2D(GLES31.GL_TEXTURE_2D, 1, format, width, height);
+
         return textureID[0];
+    }
+
+    public static void checkError() {
+        int error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            String errorString = "";
+            switch(error) {
+                case GLES20.GL_INVALID_ENUM:
+                    errorString = "GL_INVALID_ENUM";
+                    break;
+                case GLES20.GL_INVALID_VALUE:
+                    errorString = "GL_INVALID_VALUE";
+                    break;
+                case GLES20.GL_INVALID_OPERATION:
+                    errorString = "GL_INVALID_OPERATION";
+                    break;
+                case GLES20.GL_INVALID_FRAMEBUFFER_OPERATION:
+                    errorString = "GL_INVALID_FRAMEBUFFER_OPERATION";
+                    break;
+                case GLES20.GL_OUT_OF_MEMORY:
+                    errorString = "GL_OUT_OF_MEMORY";
+                    break;
+            }
+            Throwable t = new Throwable();
+            Log.e(TAG, "GL error: " + error+" "+errorString, t);
+        }
     }
 
 }

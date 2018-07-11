@@ -1,3 +1,4 @@
+//顶点着色器和片元着色器版本要保持一致
 #version 310 es
 
 uniform mat4 uMVPMatrix;

@@ -16,6 +16,8 @@ import java.nio.FloatBuffer;
  * Author : chenguoting on 2018-7-10 10:24
  * Email : chen.guoting@nubia.com
  * Company : NUBIA TECHNOLOGY CO., LTD.
+ *
+ * 先用计算着色器将图片变成黑白，再绘制到屏幕
  */
 public class BlackAndWhitePicture {
     //计算着色器及参数
@@ -42,6 +44,9 @@ public class BlackAndWhitePicture {
     private FloatBuffer textureCoordBuffer;
     private int mTextureID;
     private int mCTextureID;
+    private int width = 144;
+    private int height = 144;
+    private int local_size_x = 4, local_size_y = 4, local_size_z = 1;//保持和shader中的值一致
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
@@ -68,7 +73,7 @@ public class BlackAndWhitePicture {
         textureCoordBuffer = GLUtil.arrayToBuffer(textureCoords);
 
         mTextureID = GLUtil.loadTexture(res, R.drawable.ic_launcher);
-        mCTextureID = GLUtil.createComputeShaderTexture(GLES31.GL_RGBA32F, 144, 144);
+        mCTextureID = GLUtil.createComputeShaderTexture(GLES31.GL_RGBA32F, width, height);
 
         int computeShader = GLUtil.loadShader(GLES31.GL_COMPUTE_SHADER,
                 GLUtil.readRawFile(res, R.raw.bawp_compute_shader));
@@ -98,8 +103,8 @@ public class BlackAndWhitePicture {
         //启用着色器程序
         GLES31.glUseProgram(mComputeProgram);
         //传入数据
-        GLES31.glUniform1i(mCWidthHandle, 144);
-        GLES31.glUniform1i(mCHeightHandle, 144);
+        GLES31.glUniform1i(mCWidthHandle, width);
+        GLES31.glUniform1i(mCHeightHandle, height);
 
         GLES31.glActiveTexture(GLES31.GL_TEXTURE3);
         GLES31.glBindTexture(GLES31.GL_TEXTURE_2D, mTextureID);
@@ -107,7 +112,7 @@ public class BlackAndWhitePicture {
 
         GLES31.glBindImageTexture(mCImageHandle, mCTextureID, 0, false, 0, GLES32.GL_WRITE_ONLY, GLES32.GL_RGBA);
         //分发计算任务
-        GLES31.glDispatchCompute(144/4, 144/4, 1);
+        GLES31.glDispatchCompute(width/local_size_x, height/local_size_y, 1);
 
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
@@ -126,8 +131,8 @@ public class BlackAndWhitePicture {
 
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
         GLES20.glUniformMatrix4fv(mSTMatrixHandle, 1, false, mSTMatrix, 0);
-        GLES31.glUniform1i(mWidthHandle, 144);
-        GLES31.glUniform1i(mHeightHandle, 144);
+        GLES31.glUniform1i(mWidthHandle, width);
+        GLES31.glUniform1i(mHeightHandle, height);
         GLES31.glBindImageTexture(mImageHandle, mCTextureID, 0, false, 0, GLES32.GL_READ_ONLY, GLES32.GL_RGBA32F);
 
         // Draw the triangle
