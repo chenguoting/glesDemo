@@ -116,6 +116,7 @@ public class GLUtil {
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
 
             // Load the bitmap into the bound texture.
+            //也可以通过glTexImage2D将数据传入texture，设置格式
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
             // Recycle the bitmap, since its data has been loaded into OpenGL.
@@ -139,6 +140,7 @@ public class GLUtil {
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_S, GLES31.GL_CLAMP_TO_EDGE);
         GLES31.glTexParameteri(GLES31.GL_TEXTURE_2D, GLES31.GL_TEXTURE_WRAP_T, GLES31.GL_CLAMP_TO_EDGE);
         //第二个参数要是1，只知道和mipmap有关，具体原因不知道
+        //而且只能用glTexStorage2D，不能用glTexImage2D
         GLES31.glTexStorage2D(GLES31.GL_TEXTURE_2D, 1, format, width, height);
 
         return textureID[0];
