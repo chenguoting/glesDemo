@@ -42,8 +42,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         //mRect.draw();
-        //mPicture.draw();
-        mBlackAndWhitePicture.draw();
+        mPicture.draw();
+        //mBlackAndWhitePicture.draw();
     }
 
     @Override
