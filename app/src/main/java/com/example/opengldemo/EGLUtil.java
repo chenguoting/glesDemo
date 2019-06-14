@@ -4,6 +4,7 @@ import android.opengl.EGL14;
 import android.opengl.EGLConfig;
 import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
+import android.opengl.EGLExt;
 import android.util.Log;
 
 /*
@@ -15,7 +16,7 @@ public class EGLUtil {
     private final static String TAG = "EGLUtil";
 
     public static EGLConfig getEGLConfig(EGLDisplay display) throws Exception {
-        int EGL_RECORDABLE_ANDROID = 0x3142;
+        //int EGL_RECORDABLE_ANDROID = 0x3142;
         EGLConfig[] configs = new EGLConfig[1];
         int[] configSpec = new int[] {
                 EGL14.EGL_RED_SIZE, 8,
@@ -24,7 +25,7 @@ public class EGLUtil {
                 EGL14.EGL_ALPHA_SIZE, 8 ,
                 //EGL14.EGL_DEPTH_SIZE, 16 ,
                 EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,
-                EGL_RECORDABLE_ANDROID, 1,
+                EGLExt.EGL_RECORDABLE_ANDROID, 1, //requires API 26
                 EGL14.EGL_NONE };
 
         int[] numConfig = new int[]{0};
